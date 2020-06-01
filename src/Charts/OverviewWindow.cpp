@@ -66,9 +66,13 @@ OverviewWindow::OverviewWindow(Context *context) :
     view->setFrameStyle(QFrame::NoFrame);
     view->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 #ifdef Q_OS_LINUX
-    if (QGLFormat::openGLVersionFlags().testFlag(QGLFormat::OpenGL_Version_2_0)) {
-        view->setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
-        view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    QOpenGLContext *oglcontext = QOpenGLContext::currentContext();
+    if(oglcontext != NULL){
+        QGLFormat::OpenGLVersionFlags flags = QGLFormat::openGLVersionFlags();
+        if (flags.testFlag(QGLFormat::OpenGL_Version_2_0)) {
+            view->setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
+            view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+        }
     }
 #endif
     view->setScene(scene);
