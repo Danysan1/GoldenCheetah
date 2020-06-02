@@ -1,6 +1,7 @@
 branches:
   only:
   - master
+  - trim_tcx_test
   - /^[vV]\d+\.\d+(\.\d+)?(-\S*)?$/
 
 language: cpp
